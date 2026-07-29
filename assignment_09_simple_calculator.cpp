@@ -73,3 +73,134 @@
 #include <cmath>
 using namespace std;
 
+// Helper function to clear invalid input stream state
+void clearInputBuffer() {
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
+// 1. Addition
+double add(double a, double b) {
+    return a + b;
+}
+
+// 2. Subtraction
+double subtract(double a, double b) {
+    return a - b;
+}
+
+// 3. Multiplication
+double multiply(double a, double b) {
+    return a * b;
+}
+
+// 4. Division
+bool divide(double a, double b, double& result) {
+    if (b == 0) {
+        return false; // Indicates division by zero error
+    }
+    result = a / b;
+    return true;
+}
+
+// 5. Modulus (Converts doubles to integers for standard integer remainder)
+bool modulus(int a, int b, int& result) {
+    if (b == 0) {
+        return false; // Indicates modulus by zero error
+    }
+    result = a % b;
+    return true;
+}
+
+// 6. Exponentiation
+double power(double base, double exp) {
+    return pow(base, exp);
+}
+
+int main() {
+    int choice = 0;
+
+    // Set floating-point precision to 2 decimal places globally
+    cout << fixed << setprecision(2);
+
+    while (choice != 7) {
+        cout << "\n============================\n";
+        cout << "      SIMPLE CALCULATOR     \n";
+        cout << "============================\n";
+        cout << "1. Addition\n";
+        cout << "2. Subtraction\n";
+        cout << "3. Multiplication\n";
+        cout << "4. Division\n";
+        cout << "5. Modulus\n";
+        cout << "6. Exponentiation\n";
+        cout << "7. Quit\n";
+        cout << "Select an operation (1-7): ";
+
+        cin >> choice;
+
+        if (cin.fail()) {
+            clearInputBuffer();
+            cout << "Error: Invalid selection. Please enter a number between 1 and 7.\n";
+            continue;
+        }
+
+        if (choice == 7) {
+            cout << "Goodbye!\n";
+            break;
+        }
+
+        if (choice < 1 || choice > 7) {
+            cout << "Error: Invalid choice. Please select an option between 1 and 7.\n";
+            continue;
+        }
+
+        double num1, num2;
+        cout << "Enter first number : ";
+        cin >> num1;
+        cout << "Enter second number: ";
+        cin >> num2;
+
+        if (cin.fail()) {
+            clearInputBuffer();
+            cout << "Error: Invalid numeric input.\n";
+            continue;
+        }
+
+        switch (choice) {
+            case 1:
+                cout << "Result: " << num1 << " + " << num2 << " = " << add(num1, num2) << "\n";
+                break;
+            case 2:
+                cout << "Result: " << num1 << " - " << num2 << " = " << subtract(num1, num2) << "\n";
+                break;
+            case 3:
+                cout << "Result: " << num1 << " * " << num2 << " = " << multiply(num1, num2) << "\n";
+                break;
+            case 4: {
+                double res;
+                if (divide(num1, num2, res)) {
+                    cout << "Result: " << num1 << " / " << num2 << " = " << res << "\n";
+                } else {
+                    cout << "Error: Cannot divide by zero.\n";
+                }
+                break;
+            }
+            case 5: {
+                int intRes;
+                int int1 = static_cast<int>(num1);
+                int int2 = static_cast<int>(num2);
+                if (modulus(int1, int2, intRes)) {
+                    cout << "Result: " << int1 << " % " << int2 << " = " << intRes << "\n";
+                } else {
+                    cout << "Error: Cannot perform modulus by zero.\n";
+                }
+                break;
+            }
+            case 6:
+                cout << "Result: " << num1 << " ^ " << num2 << " = " << power(num1, num2) << "\n";
+                break;
+        }
+    }
+
+    return 0;
+}
