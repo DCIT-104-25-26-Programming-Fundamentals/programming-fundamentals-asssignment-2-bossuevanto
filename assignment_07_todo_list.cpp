@@ -80,3 +80,105 @@
 #include <string>
 using namespace std;
 
+// Helper function to clear input stream buffers when switching between cin >> and getline()
+void clearInputBuffer() {
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
+// FEATURE 1: Add a Task
+void addTask(vector<string>& tasks) {
+    clearInputBuffer(); // Clear newline character left by previous cin >>
+    cout << "Enter task: ";
+    string task;
+    getline(cin, task);
+
+    if (!task.empty()) {
+        tasks.push_back(task);
+        cout << "Task added: \"" << task << "\"\n";
+    } else {
+        cout << "Error: Task description cannot be empty.\n";
+    }
+}
+
+// FEATURE 2: View All Tasks
+void viewTasks(const vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "Your to-do list is currently empty!\n";
+        return;
+    }
+
+    cout << "\nYour Tasks:\n";
+    for (size_t i = 0; i < tasks.size(); i++) {
+        cout << (i + 1) << ". " << tasks[i] << endl;
+    }
+}
+
+// FEATURE 3: Delete a Task
+void deleteTask(vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "Your to-do list is empty. Nothing to delete!\n";
+        return;
+    }
+
+    viewTasks(tasks);
+
+    int taskNum;
+    cout << "Enter task number to delete: ";
+    cin >> taskNum;
+
+    // Validate the 1-based index input by the user
+    if (taskNum >= 1 && taskNum <= static_cast<int>(tasks.size())) {
+        int index = taskNum - 1; // Convert 1-based user input to 0-based vector index
+        string removedTask = tasks[index];
+        tasks.erase(tasks.begin() + index);
+        cout << "Task \"" << removedTask << "\" has been removed.\n";
+    } else {
+        cout << "Error: Invalid task number.\n";
+    }
+}
+
+int main() {
+    vector<string> tasks;
+    int choice = 0;
+
+    while (choice != 4) {
+        cout << "\n============================\n";
+        cout << "       TO-DO LIST MENU      \n";
+        cout << "============================\n";
+        cout << "1. Add task\n";
+        cout << "2. View tasks\n";
+        cout << "3. Delete task\n";
+        cout << "4. Quit\n";
+        cout << "Enter your choice (1-4): ";
+
+        cin >> choice;
+
+        // Handle non-numeric or invalid input gracefully
+        if (cin.fail()) {
+            cin.clear();
+            clearInputBuffer();
+            cout << "Invalid input. Please enter a number between 1 and 4.\n";
+            continue;
+        }
+
+        switch (choice) {
+            case 1:
+                addTask(tasks);
+                break;
+            case 2:
+                viewTasks(tasks);
+                break;
+            case 3:
+                deleteTask(tasks);
+                break;
+            case 4:
+                cout << "Goodbye!\n";
+                break;
+            default:
+                cout << "Invalid choice. Please select an option between 1 and 4.\n";
+                break;
+        }
+    }
+
+    return 0;
+}
