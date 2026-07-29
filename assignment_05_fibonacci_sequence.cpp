@@ -51,3 +51,82 @@
 #include <iostream>
 using namespace std;
 
+void printFibonacci(int n) {
+    if (n <= 0) {
+        cout << "Error: Number of terms must be a positive integer." << endl;
+        return;
+    }
+
+    cout << "Fibonacci sequence: ";
+    
+    
+    if (n >= 1) {
+        cout << 0;
+    }
+    
+    if (n >= 2) {
+        cout << " " << 1;
+    }
+
+    long long first = 0;
+    long long second = 1;
+
+    for (int i = 3; i <= n; i++) {
+        long long next = first + second;
+        cout << " " << next;
+        
+        first = second;
+        second = next;
+    }
+    cout << endl;
+}
+
+bool isFibonacci(long long num) {
+    if (num < 0) {
+        return false;
+    }
+
+    if (num == 0 || num == 1) {
+        return true;
+    }
+
+    long long first = 0;
+    long long second = 1;
+    long long next = first + second;
+
+    while (next < num) {
+        first = second;
+        second = next;
+        next = first + second;
+    }
+
+    return (next == num);
+}
+
+int main() {
+    cout << "=========================================\n";
+    cout << "  PART A: PRINT FIRST N FIBONACCI TERMS  \n";
+    cout << "=========================================\n";
+    
+    int n;
+    cout << "How many terms? ";
+    cin >> n;
+
+    printFibonacci(n);
+
+    cout << "\n=========================================\n";
+    cout << "   PART B: CHECK IF NUMBER IS FIBONACCI  \n";
+    cout << "=========================================\n";
+
+    long long numToCheck;
+    cout << "Enter a number to check: ";
+    cin >> numToCheck;
+
+    if (isFibonacci(numToCheck)) {
+        cout << numToCheck << " is a Fibonacci number." << endl;
+    } else {
+        cout << numToCheck << " is NOT a Fibonacci number." << endl;
+    }
+
+    return 0;
+}
