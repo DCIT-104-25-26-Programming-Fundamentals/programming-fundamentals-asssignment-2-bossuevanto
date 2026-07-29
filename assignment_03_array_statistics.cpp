@@ -42,3 +42,76 @@
 #include <iostream>
 using namespace std;
 
+double calculateSum(double arr[], int size) {
+    double total = 0.0;
+    for (int i = 0; i < size; i++) {
+        total += arr[i];
+    }
+    return total;
+}
+
+// Function to calculate the average
+double calculateAverage(double sum, int size) {
+    return sum / size;
+}
+
+// Function to find the maximum value
+double findMax(double arr[], int size) {
+    double maxVal = arr[0]; // Start by assuming the first element is the largest
+    for (int i = 1; i < size; i++) {
+        if (arr[i] > maxVal) {
+            maxVal = arr[i]; // Update maxVal if a bigger number is found
+        }
+    }
+    return maxVal;
+}
+
+// Function to find the minimum value
+double findMin(double arr[], int size) {
+    double minVal = arr[0]; // Start by assuming the first element is the smallest
+    for (int i = 1; i < size; i++) {
+        if (arr[i] < minVal) {
+            minVal = arr[i]; // Update minVal if a smaller number is found
+        }
+    }
+    return minVal;
+}
+
+int main() {
+    int n;
+
+    // Prompt for array size
+    cout << "How many numbers? ";
+    cin >> n;
+
+    // Requirement: N must be a positive integer
+    if (n <= 0) {
+        cout << "Error: Please enter a positive number greater than 0." << endl;
+        return 1; // Exit the program early on error
+    }
+
+    // Declare an array to hold N numbers
+    double numbers[n];
+
+    // Read the numbers from the user
+    for (int i = 0; i < n; i++) {
+        cout << "Enter number " << (i + 1) << ": ";
+        cin >> numbers[i];
+    }
+
+    // Perform calculations using our custom functions
+    double sum = calculateSum(numbers, n);
+    double avg = calculateAverage(sum, n);
+    double maxVal = findMax(numbers, n);
+    double minVal = findMin(numbers, n);
+
+    // Display the results exactly as formatted in the example
+    cout << "\nResults:" << endl;
+    cout << "Sum:     " << sum << endl;
+    cout << "Average: " << avg << endl;
+    cout << "Maximum: " << maxVal << endl;
+    cout << "Minimum: " << minVal << endl;
+
+    return 0;
+}
+
